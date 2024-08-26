@@ -21,11 +21,6 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/DrawerLayoutAndroid/DrawerLayoutAndroidExample'),
   },
   {
-    key: 'PopupMenuAndroidExample',
-    category: 'UI',
-    module: require('../examples/PopupMenuAndroid/PopupMenuAndroidExample'),
-  },
-  {
     key: 'ActivityIndicatorExample',
     category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),

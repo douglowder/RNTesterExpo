@@ -137,6 +137,13 @@ const RNTesterApp = ({
       // Supported URL pattern(s):
       // *  rntester://example/<moduleKey>
       // *  rntester://example/<moduleKey>/<exampleKey>
+
+      // Ignore expo dev client matches
+      const expoMatch = /.*expo-development-client.*/.exec(url);
+      if (expoMatch) {
+        return;
+      }
+
       const match =
         /^rntester:\/\/example\/([a-zA-Z0-9_-]+)(?:\/([a-zA-Z0-9_-]+))?$/.exec(
           url,

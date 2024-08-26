@@ -120,7 +120,7 @@ const RNTesterNavbar = ({
   const isComponentActive = screen === 'components' && !isExamplePageOpen;
 
   return (
-    <TVFocusGuideView autoFocus>
+    <TVFocusGuideView>
       <View style={styles.buttonContainer}>
         <ComponentTab
           isComponentActive={isComponentActive}
