@@ -6,7 +6,7 @@
     "android": "EXPO_TV=1 expo run:android",
     "ios": "EXPO_TV=1 expo run:ios",
     "web": "expo start --web",
-    "prebuild": "EXPO_TV=1 expo prebuild --clean"
+    "prebuild": "./scripts/prebuild.sh"
   },
   "dependencies": {
     "expo": "~51.0.31",
@@ -14,7 +14,12 @@
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "npm:react-native-tvos@~0.74.5-0"
+    "react-native": "./dependencies/react-native-tvos-0.75.2-0rc0.tgz",
+    "@react-native-tvos/virtualized-lists": "./dependencies/react-native-tvos-virtualized-lists-0.75.2-0rc0.tgz"
+  },
+  "resolutions": {
+    "react-native": "./dependencies/react-native-tvos-0.75.2-0rc0.tgz",
+    "@react-native-tvos/virtualized-lists": "./dependencies/react-native-tvos-virtualized-lists-0.75.2-0rc0.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
