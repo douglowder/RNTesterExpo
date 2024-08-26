@@ -14,12 +14,7 @@
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "./dependencies/react-native-tvos-0.75.2-0rc0.tgz",
-    "@react-native-tvos/virtualized-lists": "./dependencies/react-native-tvos-virtualized-lists-0.75.2-0rc0.tgz"
-  },
-  "resolutions": {
-    "react-native": "./dependencies/react-native-tvos-0.75.2-0rc0.tgz",
-    "@react-native-tvos/virtualized-lists": "./dependencies/react-native-tvos-virtualized-lists-0.75.2-0rc0.tgz"
+    "react-native": "npm:react-native-tvos@0.75.2-0rc0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
