@@ -13,9 +13,10 @@
 const React = require('react');
 const ReactNative = require('react-native');
 
-import {RNTesterThemeContext} from '../../components/RNTesterTheme';
+import { RNTesterThemeContext } from '../../components/RNTesterTheme';
 
-const {Platform, View, StyleSheet, TouchableOpacity, Text, findNodeHandle} = ReactNative;
+const { Platform, View, StyleSheet, TouchableOpacity, Text, findNodeHandle } =
+  ReactNative;
 
 exports.framework = 'React';
 exports.title = 'DirectionalNextFocus example';
@@ -31,13 +32,13 @@ exports.examples = [
 
 const scale = Platform.OS === 'android' ? 0.5 : 1.0;
 
-const width = 200*scale;
-const height = 120*scale;
+const width = 200 * scale;
+const height = 120 * scale;
 
 const Button = React.forwardRef((props: $FlowFixMeProps, ref) => {
   return (
     <RNTesterThemeContext.Consumer>
-      {theme => {
+      {(theme) => {
         return (
           <TouchableOpacity
             hasTVPreferredFocus={props.hasTVPreferredFocus || false}
@@ -49,8 +50,9 @@ const Button = React.forwardRef((props: $FlowFixMeProps, ref) => {
             onPress={props.onPress}
             onFocus={props.onFocus}
             style={[styles.buttonStyle, props.style]}
-            ref={ref}>
-            <Text style={[{color: theme.LinkColor}, styles.buttonText]}>
+            ref={ref}
+          >
+            <Text style={[{ color: theme.LinkColor }, styles.buttonText]}>
               {props.label}
             </Text>
           </TouchableOpacity>
@@ -62,10 +64,10 @@ const Button = React.forwardRef((props: $FlowFixMeProps, ref) => {
 
 const ThemedView = (props: $FlowFixMeProps) => (
   <RNTesterThemeContext.Consumer>
-    {theme => {
+    {(theme) => {
       return (
         <View style={[styles.buttonStyle, props.style]}>
-          <Text style={[{color: theme.LabelColor}, styles.buttonText]}>
+          <Text style={[{ color: theme.LabelColor }, styles.buttonText]}>
             {props.label}
           </Text>
         </View>
@@ -75,47 +77,59 @@ const ThemedView = (props: $FlowFixMeProps) => (
 );
 
 const DirectionalNextFocusExample = () => {
-  const [upDestination, setUpDestination]: [any, (any) => void] = React.useState(null);
-  const [downDestination, setDownDestination]: [any, (any) => void] = React.useState(null);
-  const [leftDestination, setLeftDestination]: [any, (any) => void] = React.useState(null);
-  const [rightDestination, setRightDestination]: [any, (any) => void] = React.useState(null);
+  const [upDestination, setUpDestination]: [any, (any) => void] =
+    React.useState(null);
+  const [downDestination, setDownDestination]: [any, (any) => void] =
+    React.useState(null);
+  const [leftDestination, setLeftDestination]: [any, (any) => void] =
+    React.useState(null);
+  const [rightDestination, setRightDestination]: [any, (any) => void] =
+    React.useState(null);
 
-  const tagForDestination = (destination: ?React.Node) =>
-    destination ? findNodeHandle(destination) : undefined;
+  const upRef = React.useRef(undefined);
+  const downRef = React.useRef(undefined);
+  const leftRef = React.useRef(undefined);
+  const rightRef = React.useRef(undefined);
+
+  React.useEffect(() => {
+    if (upRef?.current) {
+      setUpDestination(upRef?.current);
+    }
+    if (downRef?.current) {
+      setDownDestination(downRef?.current);
+    }
+    if (leftRef?.current) {
+      setLeftDestination(leftRef?.current);
+    }
+    if (rightRef?.current) {
+      setRightDestination(rightRef?.current);
+    }
+  }, [upRef?.current, downRef?.current, leftRef?.current, rightRef?.current]);
 
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
         <Button
-          nextFocusUp={tagForDestination(upDestination)}
+          nextFocusUp={upDestination}
           nextFocusDown={downDestination}
-          nextFocusLeft={tagForDestination(leftDestination)}
+          nextFocusLeft={leftDestination}
           nextFocusRight={rightDestination}
           label="Starting point"
         />
-        <Button
-          ref={component => setUpDestination(component)}
-          label="nextUp destination"
-        />
+        <Button ref={upRef} label="nextUp destination" />
         <View style={styles.containerFocusGuide}>
           <Button label="Wrapped button 1" />
-          <Button
-            ref={component => setDownDestination(component)}
-            label="nextDown destination"
-          />
+          <Button ref={downRef} label="nextDown destination" />
           <Button label="Wrapped button 3" />
         </View>
       </View>
       <View style={styles.rowContainer}>
-        <Button
-          ref={component => setRightDestination(component)}
-          label="nextRight destination"
-        />
+        <Button ref={rightRef} label="nextRight destination" />
         <ThemedView label="" />
         <Button
-          ref={component => setLeftDestination(component)}
+          ref={leftRef}
           hasTVPreferredFocus={true}
-          style={{width: width * 3}}
+          style={{ width: width * 3 }}
           label="nextLeft destination"
         />
       </View>
@@ -129,15 +143,15 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: 'row',
-    padding: 0.5*width,
+    padding: 0.5 * width,
   },
   buttonText: {
-    fontSize: 30*scale,
+    fontSize: 30 * scale,
   },
   buttonStyle: {
     width,
     height,
-    margin: 20*scale,
+    margin: 20 * scale,
   },
   focusGuide: {
     width,
