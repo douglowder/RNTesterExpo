@@ -1,0 +1,33 @@
+diff --git a/node_modules/expo/android/src/main/java/expo/modules/ExpoReactHostFactory.kt b/node_modules/expo/android/src/main/java/expo/modules/ExpoReactHostFactory.kt
+index 8ade2da..a7a47d2 100644
+--- a/node_modules/expo/android/src/main/java/expo/modules/ExpoReactHostFactory.kt
++++ b/node_modules/expo/android/src/main/java/expo/modules/ExpoReactHostFactory.kt
+@@ -3,7 +3,6 @@
+ package expo.modules
+ 
+ import android.content.Context
+-import com.facebook.react.JSEngineResolutionAlgorithm
+ import com.facebook.react.ReactHost
+ import com.facebook.react.ReactInstanceEventListener
+ import com.facebook.react.ReactNativeHost
+@@ -60,11 +59,7 @@ object ExpoReactHostFactory {
+       get() = reactNativeHostWrapper.jsMainModuleName
+ 
+     override val jsRuntimeFactory: JSRuntimeFactory
+-      get() = if (reactNativeHostWrapper.jsEngineResolutionAlgorithm == JSEngineResolutionAlgorithm.HERMES) {
+-        HermesInstance()
+-      } else {
+-        JSCInstance()
+-      }
++      get() = HermesInstance()
+ 
+     override val reactPackages: List<ReactPackage>
+       get() = reactNativeHostWrapper.packages
+@@ -107,7 +102,6 @@ object ExpoReactHostFactory {
+           useDeveloperSupport
+         )
+           .apply {
+-            jsEngineResolutionAlgorithm = reactNativeHost.jsEngineResolutionAlgorithm
+           }
+ 
+       reactNativeHost.reactNativeHostHandlers.forEach { handler ->

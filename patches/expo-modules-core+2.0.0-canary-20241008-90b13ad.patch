@@ -1,0 +1,114 @@
+diff --git a/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt b/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt
+index ae0a811..485355d 100644
+--- a/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt
++++ b/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt
+@@ -254,7 +254,7 @@ open class PermissionsService(val context: Context) : InternalModule, Permission
+           mPendingPermissionCalls.add(permissions to listener)
+         } else {
+           mCurrentPermissionListener = listener
+-          currentActivity.requestPermissions(permissions, PERMISSIONS_REQUEST, createListenerWithPendingPermissionsRequest())
++          currentActivity.requestPermissions(permissions as Array<String>, PERMISSIONS_REQUEST, createListenerWithPendingPermissionsRequest())
+         }
+       }
+     } else {
+@@ -283,7 +283,7 @@ open class PermissionsService(val context: Context) : InternalModule, Permission
+             }
+ 
+             mCurrentPermissionListener = pendingCall.second
+-            activity.requestPermissions(pendingCall.first, PERMISSIONS_REQUEST, createListenerWithPendingPermissionsRequest())
++            activity.requestPermissions(pendingCall.first as Array<String>, PERMISSIONS_REQUEST, createListenerWithPendingPermissionsRequest())
+             return@PermissionListener false
+           }
+ 
+diff --git a/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/Promise.kt b/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/Promise.kt
+index 8afde86..0796aae 100644
+--- a/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/Promise.kt
++++ b/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/Promise.kt
+@@ -41,44 +41,49 @@ fun Promise.toBridgePromise(): com.facebook.react.bridge.Promise {
+       resolveMethod(value)
+     }
+ 
+-    override fun reject(code: String?, message: String?) {
++    override fun reject(code: String, message: String?) {
+       expoPromise.reject(code ?: unknownCode, message, null)
+     }
+ 
+-    override fun reject(code: String?, throwable: Throwable?) {
++    override fun reject(code: String, throwable: Throwable?) {
+       expoPromise.reject(code ?: unknownCode, null, throwable)
+     }
+ 
+-    override fun reject(code: String?, message: String?, throwable: Throwable?) {
++    override fun reject(code: String, throwable: Throwable?, userInfo: WritableMap) {
++      return expoPromise.reject(code, throwable?.message, throwable)
++    }
++
++    override fun reject(
++      code: String?,
++      message: String?,
++      throwable: Throwable?,
++      userInfo: WritableMap?
++    ) {
++      return expoPromise.reject(code ?: "", throwable?.message, throwable)
++    }
++
++    override fun reject(code: String, message: String?, throwable: Throwable?) {
+       expoPromise.reject(code ?: unknownCode, message, throwable)
+     }
+ 
+-    override fun reject(throwable: Throwable?) {
++    override fun reject(throwable: Throwable) {
+       expoPromise.reject(unknownCode, null, throwable)
+     }
+ 
+-    override fun reject(throwable: Throwable?, userInfo: WritableMap?) {
++    override fun reject(throwable: Throwable, userInfo: WritableMap) {
+       expoPromise.reject(unknownCode, null, throwable)
+     }
+ 
+-    override fun reject(code: String?, userInfo: WritableMap) {
++    override fun reject(code: String, userInfo: WritableMap) {
+       expoPromise.reject(code ?: unknownCode, null, null)
+     }
+ 
+-    override fun reject(code: String?, throwable: Throwable?, userInfo: WritableMap?) {
+-      expoPromise.reject(code ?: unknownCode, null, throwable)
+-    }
+-
+-    override fun reject(code: String?, message: String?, userInfo: WritableMap) {
++    override fun reject(code: String, message: String?, userInfo: WritableMap) {
+       expoPromise.reject(code ?: unknownCode, message, null)
+     }
+ 
+-    override fun reject(code: String?, message: String?, throwable: Throwable?, userInfo: WritableMap?) {
+-      expoPromise.reject(code ?: unknownCode, message, throwable)
+-    }
+-
+     @Deprecated("Use reject(code, message, throwable) instead")
+-    override fun reject(message: String?) {
++    override fun reject(message: String) {
+       expoPromise.reject(unknownCode, message, null)
+     }
+   }
+diff --git a/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegateWrapper.mm b/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegateWrapper.mm
+index b59ca20..95a93c0 100644
+--- a/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegateWrapper.mm
++++ b/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegateWrapper.mm
+@@ -105,6 +105,8 @@
+   // NOTE(kudo): `sourceURLForBridge` is not referenced intentionally because it does not support New Architecture.
+   configuration.sourceURLForBridge = nil;
+ 
++  // These not found in 0.76-rc.4
++  /*
+   configuration.hostDidStartBlock = ^(RCTHost *_Nonnull host) {
+     [weakSelf hostDidStart:host];
+   };
+@@ -117,7 +119,7 @@
+         BOOL isFatal) {
+         [weakSelf host:host didReceiveJSErrorStack:stack message:message exceptionId:exceptionId isFatal:isFatal];
+       };
+-
++   */
+   if ([self respondsToSelector:@selector(extraModulesForBridge:)]) {
+     configuration.extraModulesForBridge = ^NSArray<id<RCTBridgeModule>> *_Nonnull(RCTBridge *_Nonnull bridge)
+     {
