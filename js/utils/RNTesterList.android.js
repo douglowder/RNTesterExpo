@@ -83,6 +83,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'TVTextScrollViewExample',
+    category: 'TV',
     module: require('../examples/TVTextScrollView/TVTextScrollViewExample'),
   },
   {
@@ -137,6 +138,32 @@ const Components: Array<RNTesterModuleInfo> = [
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
+  {
+    key: 'TVEventHandlerExample',
+    category: 'TV',
+    module: require('../examples/TVEventHandler/TVEventHandlerExample'),
+  },
+  {
+    key: 'TVDirectionalNextFocusExample',
+    category: 'TV',
+    module: require('../examples/DirectionalNextFocus/DirectionalNextFocusExample'),
+  },
+  {
+    key: 'TVDynamicDirectionalNextFocusExample',
+    category: 'TV',
+    module: require('../examples/DirectionalNextFocus/DynamicDirectionalNextFocusExample'),
+    supportsTVOS: true,
+  },
+  {
+    key: 'TVFocusGuideExample',
+    category: 'TV',
+    module: require('../examples/TVFocusGuide/TVFocusGuideExample'),
+  },
+  {
+    key: 'TVFocusGuideAutoFocusExample',
+    category: 'TV',
+    module: require('../examples/TVFocusGuide/TVFocusGuideAutoFocusExample'),
+  },
   {
     key: 'AccessibilityExample',
     category: 'Basic',
@@ -229,13 +256,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
   },
-  typeof MutationObserver === 'function'
-    ? {
-        key: 'MutationObserver',
-        category: 'UI',
-        module: require('../examples/MutationObserver/MutationObserverIndex'),
-      }
-    : null,
   {
     key: 'NativeAnimationsExample',
     category: 'UI',
@@ -300,29 +320,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'FilterExample',
     category: 'UI',
     module: require('../examples/Filter/FilterExample'),
-  },
-  {
-    key: 'TVEventHandlerExample',
-    module: require('../examples/TVEventHandler/TVEventHandlerExample'),
-  },
-  {
-    key: 'DirectionalNextFocusExample',
-    module: require('../examples/DirectionalNextFocus/DirectionalNextFocusExample'),
-  },
-  {
-    key: 'TVDynamicDirectionalNextFocusExample',
-    category: 'TV',
-    module: require('../examples/DirectionalNextFocus/DynamicDirectionalNextFocusExample'),
-    supportsTVOS: true,
-  },
-  {
-    key: 'TVFocusGuideExample',
-    module: require('../examples/TVFocusGuide/TVFocusGuideExample'),
-  },
-  {
-    key: 'TVFocusGuideAutoFocusExample',
-    category: 'TV',
-    module: require('../examples/TVFocusGuide/TVFocusGuideAutoFocusExample'),
   },
   {
     key: 'VibrationExample',

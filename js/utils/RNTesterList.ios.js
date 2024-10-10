@@ -16,6 +16,11 @@ import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNat
 
 const Components: Array<RNTesterModuleInfo> = [
   {
+    key: 'TVTextScrollViewExample',
+    category: 'TV',
+    module: require('../examples/TVTextScrollView/TVTextScrollViewExample'),
+  },
+  {
     key: 'ActivityIndicatorExample',
     category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),
@@ -94,10 +99,6 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'SectionListIndex',
     module: require('../examples/SectionList/SectionListIndex'),
     supportsTVOS: true,
-  },
-  {
-    key: 'TVTextScrollViewExample',
-    module: require('../examples/TVTextScrollView/TVTextScrollViewExample'),
   },
   {
     key: 'StatusBarExample',
@@ -226,13 +227,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'LinkingExample',
     module: require('../examples/Linking/LinkingExample'),
   },
-  typeof MutationObserver === 'function'
-    ? {
-        key: 'MutationObserver',
-        category: 'UI',
-        module: require('../examples/MutationObserver/MutationObserverIndex'),
-      }
-    : null,
   {
     key: 'NativeAnimationsExample',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
